@@ -5,6 +5,7 @@ import { axiosGet } from './components/fetchData.jsx';
 
 /* Pages with Components */
 import ClientsIndex from './pages/clients/index';
+import DebtsNew from './pages/debts/new';
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
 
   return (
     <div className="App">
-      <ClientsIndex clientsProp={clientsTable}/>
+      <DebtsNew />
+      {/* <ClientsIndex clientsProp={clientsTable}/> */}
     </div>
   );
 }
