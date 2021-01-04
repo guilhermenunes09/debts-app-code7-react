@@ -5,14 +5,10 @@ function ClientsIndex (props) {
 
 
   return (
-    <div className="App">
-      <div className="text-danger">
-    
+    <div className="ClientsList">
         {props.clientsProp && props.clientsProp.map(function (item, i) {
             return <ClientCard clientCard={item} />
           })}
-        
-      </div>
     </div>
   );
 }
