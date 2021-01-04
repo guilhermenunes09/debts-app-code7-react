@@ -1,6 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 function DebtsNew (props) {
+
+    const inputClient = useRef(null);
+    const inputReason = useRef(null);
+    const inputAmount = useRef(null);
+    const inputWhen = useRef(null);
+
+    const handleClick = () => {
+        console.log("Clicking");
+        console.log(inputReason.current.value);
+        console.log(inputAmount.current.value);
+        console.log(inputWhen.current.value);
+        console.log(inputClient.current.value);
+    }
 
     return(
         <>
@@ -11,28 +24,32 @@ function DebtsNew (props) {
                     </div>
                     <div className="col-sm-9 border border-danger">
                         <form>
-                            <select className="form-control form-control-lg">
-                                <option>Large select</option>
+                            <select ref={inputClient} className="form-control form-control-lg">
+                                {props.clientsProp && props.clientsProp.map(function (item, i) {
+                                    return <option value={i}>{item.name}</option>
+                                })}
                             </select>
                             <div className="form-group">
-                                <label for="formGroupExampleInput">Example label</label>
-                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input" />
+                                <label for="formGroupExampleInput">Motivo</label>
+                                <input ref={inputReason} type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input" />
                             </div>
                             <div className="form-group">
-                                <label for="formGroupExampleInput" class="mr-sm-2">Example label</label>
+                                <label for="formGroupExampleInput" class="mr-sm-2">Valor</label>
                                 <div className="form-inline">
-                                    <input type="number" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Example input" />
+                                    <input ref={inputAmount} type="number" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Example input" />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label for="formGroupExampleInput" class="mr-sm-2">Example label</label>
+                                <label for="formGroupExampleInput" class="mr-sm-2">Data</label>
                                 <div className="form-inline">
-                                    <input type="number" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Example input" />
+                                    <input ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
                                 </div>
                             </div>
 
+                            <input type="hidden" name="id" value="0" />
+
                             <button type="button" class="btn btn-outline-secondary">Excluir</button>
-                            <button type="button" class="btn btn-outline-primary">Salvar</button>
+                            <button onClick={handleClick} type="button" class="btn btn-outline-primary">Salvar</button>
 
                         </form>
                     </div>    
