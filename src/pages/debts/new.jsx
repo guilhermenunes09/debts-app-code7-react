@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import DebtsList from '../../components/debtsList.jsx';
 import { axiosPost } from '../../components/postData.jsx';
+
 
 function DebtsNew (props) {
 
@@ -7,6 +9,7 @@ function DebtsNew (props) {
     const inputReason = useRef(null);
     const inputAmount = useRef(null);
     const inputWhen = useRef(null);
+
 
     const handleClick = () => {
         console.log("Clicking");
@@ -29,7 +32,7 @@ function DebtsNew (props) {
             <div className="container text-left">
                 <div className="row">
                     <div className="col-sm-3 border border-danger">
-                        One of three columns
+                        <DebtsList clientsProp={props.clientsProp} />
                     </div>
                     <div className="col-sm-9 border border-danger">
                         <form>

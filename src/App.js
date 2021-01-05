@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css';
 
+import { API_RAILS, API_JSON } from './apiAccess/config.js';
 import { axiosGet } from './components/fetchData.jsx';
 
 /* Pages with Components */
@@ -11,11 +12,17 @@ function App() {
 
   const [clientsTable, setClientsTable] = useState([]);
 
-  useEffect(
-   () => {
-     axiosGet.then((data) => {
-      setClientsTable(data);
-     });
+  const getData = () => {
+    axiosGet(API_JSON).then(res => {
+      setClientsTable(res);
+    });
+  }
+
+
+  useEffect( 
+    () => {
+      getData();
+    
     },[]
   );
 
