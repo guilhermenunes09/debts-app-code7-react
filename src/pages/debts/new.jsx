@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { axiosPost } from '../../components/postData.jsx';
 
 function DebtsNew (props) {
 
@@ -13,6 +14,14 @@ function DebtsNew (props) {
         console.log(inputAmount.current.value);
         console.log(inputWhen.current.value);
         console.log(inputClient.current.value);
+        const dataPost = {
+            reason:inputReason.current.value,
+            amount:inputAmount.current.value,
+            when:inputWhen.current.value,
+            client:inputClient.current.value
+        };
+
+        axiosPost(dataPost);
     }
 
     return(
