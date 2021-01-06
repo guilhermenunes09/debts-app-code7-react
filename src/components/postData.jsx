@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 const axiosPost = (dataPost, url) =>
 {
-    new Promise(
+    return new Promise(
         function(resolve, reject) {
             let data = {
                 debt: dataPost
@@ -15,7 +15,7 @@ const axiosPost = (dataPost, url) =>
               })
             .then(function (response) {
                 // handle success
-                const data = response.data;
+                const data = response;
                 resolve (data);
             })
             .catch(function (error) {

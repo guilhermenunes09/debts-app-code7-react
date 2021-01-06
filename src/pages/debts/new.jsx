@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, createContext } from 'react';
 import DebtsList from './debtsList.jsx';
 import { axiosPost } from '../../components/postData.jsx';
+import { axiosGet } from '../../components/fetchData.jsx';
 import { API_RAILS } from '../../apiAccess/config.js';
 import '../../components/styles/debtsNew.css';
 import { currentClient } from '../../contexts/currentClient.js';
@@ -33,6 +34,13 @@ function DebtsNew (props) {
         }
     },[idArray]);
 
+    /* Request List from Local Server API */
+    useEffect(()=> {
+        axiosGet(API_RAILS).then(response => {
+            setDebtList(response);
+        });
+    },[]);
+
     /* Declaring Form references */
     const inputClient = useRef(null);  const inputReason = useRef(null);
     const inputAmount = useRef(null);   const inputWhen = useRef(null);
@@ -41,14 +49,40 @@ function DebtsNew (props) {
     const handleClick = () => {       
         const selected = inputClient.current.selectedIndex;
         const myClient = inputClient.current[selected].getAttribute("data-value");
+        console.log("POST ID");
+        console.log(id);
         const dataPost = {
+            id: id,
             reason:inputReason.current.value,
             amount:inputAmount.current.value,
             when:inputWhen.current.value,
             client: myClient
         };
-        axiosPost(dataPost, API_RAILS);
+        axiosPost(dataPost, API_RAILS).then((response) => {
+            if(response.status === 200) {
+                console.log("Sucesos");
+                console.log(response.data);
+                //let newDebtList = debtList.unshift(response.data.debt)
+                console.log("BEFORE");
+                console.log(debtList);
+                setDebtList(debtList => [...debtList, response.data.debt]);
+                console.log("AFTER");
+                //console.log(newDebtList);
+
+                
+                //setDebtList(newDebtList)
+            } else {
+                console.log("Falhou");
+            }
+        });
     }
+
+    useEffect(() => {
+        console.log("AFTER")
+        console.log(debtList);
+    },[debtList])
+
+     
 
     /* Use Context Config */
     let value = {
@@ -56,7 +90,7 @@ function DebtsNew (props) {
         idArray: idArray,
         updateClientId: updateClientId,
         updateArrayId: updateArrayId,
-        updateDebtList: updateDebtList,
+        debtList: debtList,
     }
 
     function updateClientId (key=1, id) {
@@ -65,14 +99,12 @@ function DebtsNew (props) {
      function updateArrayId (key=32, idArray) {
          setIdArray(idArray);
      }
-     function updateDebtList (key=3, debtList) {
-         setDebtList(debtList);
-     }
+
 
 
     return(
         <currentClient.Provider value={{value}}>
-
+            {id}
             <div className="container text-left">
                 <div className="row">
                     <div className="col-sm-3 border border-danger">
@@ -81,7 +113,7 @@ function DebtsNew (props) {
                     <div className="col-sm-9 border border-warning">
                         <div className="debt-new d-flex p-4 m-2 border border-info bd-highlight">
                             <form key={id}>
-                                <select value={idArray} ref={inputClient} className="form-control form-control-lg">
+                                <select defaultValue={idArray} ref={inputClient} className="form-control form-control-lg">
                                     {props.clientsProp && props.clientsProp.map(function (item, i) {
                                         return <option value={i} data-value={JSON.stringify(item)}>{item.name}</option>
                                     })}
