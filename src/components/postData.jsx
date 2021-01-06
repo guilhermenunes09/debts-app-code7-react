@@ -1,14 +1,21 @@
 
 import Axios from 'axios';
 
-const axiosPost = (dataPost) =>
+const axiosPost = (dataPost, url) =>
 {
     new Promise(
         function(resolve, reject) {
-
             // Make a request for a user with a given ID
-            Axios.post('http://localhost:3000/api/debts', {
-                debt: dataPost, 
+
+            let data = {
+                debt: dataPost
+            }
+
+            Axios.post(url, data, {
+                headers: {
+                    // Overwrite Axios's automatically set Content-Type
+                    'Content-Type': 'application/json',  
+                },
               })
             .then(function (response) {
                 // handle success
