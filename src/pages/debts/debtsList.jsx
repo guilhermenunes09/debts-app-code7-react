@@ -28,7 +28,7 @@ function DebtsList (props) {
             ID: {value.id}
             { value.debtList && value.debtList.reverse().map((item,i) => {
                 return (
-                <div value={item._id.$oid} id={i} ref={debt} onClick={(e) => handleClick(e)} className="debt-single">
+                <div key={i} value={item._id.$oid} id={i} ref={debt} onClick={(e) => handleClick(e)} className="debt-single">
                     <div className="debt-item border border-info p-2 m-2 bd-highlight"><p>{ item.client.name }</p> <p>R${ item.amount }</p></div>
                 </div>
                 )

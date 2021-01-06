@@ -39,6 +39,9 @@ function App() {
 
   return (
       <div className="App">
+
+        <button class="button button-new"></button>
+
         <nav class="navbar navbar-dark bg-dark mb-4">
           <a class="navbar-brand" href="#">Debts App</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
