@@ -20,7 +20,6 @@ function DebtsNew (props) {
         amount: 5,
         when: "200-01-01",
     });
-    let [myClient, setMyClient] = useState();
 
     useEffect(()=> {
         if(debtList && typeof debtList[idArray] !== "undefined") {
@@ -32,17 +31,7 @@ function DebtsNew (props) {
             }
             setClientData(clientData);
         }
-
-        if(props.clientsProp && typeof props.clientsProp[idArray] !== "undefined") {
-            console.log("SET CLIENT");
-            console.log(props.clientsProp[idArray])
-            setMyClient(JSON.stringify(props.clientsProp[idArray]));
-        }
-
-
     },[idArray]);
-
-    
 
     /* Declaring Form references */
     const inputClient = useRef(null);  const inputReason = useRef(null);
@@ -50,12 +39,8 @@ function DebtsNew (props) {
 
     /* Get Form Data and Send it to local API */
     const handleClick = () => {       
-        console.log("Get Client info");
-        console.log(inputClient);
         const selected = inputClient.current.selectedIndex;
-        console.log(inputClient.current[selected].getAttribute("data-value"));
         const myClient = inputClient.current[selected].getAttribute("data-value");
-
         const dataPost = {
             reason:inputReason.current.value,
             amount:inputAmount.current.value,
@@ -95,7 +80,7 @@ function DebtsNew (props) {
                     </div>
                     <div className="col-sm-9 border border-warning">
                         <div className="debt-new d-flex p-4 m-2 border border-info bd-highlight">
-                            <form>
+                            <form key={id}>
                                 <select value={idArray} ref={inputClient} className="form-control form-control-lg">
                                     {props.clientsProp && props.clientsProp.map(function (item, i) {
                                         return <option value={i} data-value={JSON.stringify(item)}>{item.name}</option>
