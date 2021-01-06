@@ -4,9 +4,9 @@ Este projeto foi gerado com [Create React App] (https://github.com/facebook/crea
 
 ## Configurar na máquina
 
-$ git git@github.com:guilhermenunes09/debts-app-code7-react.git
-$ cd debts-app-code7-react
-$ npm install
+    $ git git@github.com:guilhermenunes09/debts-app-code7-react.git
+    $ cd debts-app-code7-react
+    $ npm install
 
 Esta interface está configurada para rodar em localhost:2000
 
@@ -14,11 +14,13 @@ Esta interface está configurada para rodar em localhost:2000
 
 Para se conectar criar um arquivo .env no diretório root do projeto.
 E adicione a seguinte linha ao arquivo:
+
 REACT_APP_API_HOST=http://localhost:3000/
 
 Para rodar em modo de desenvolvimento
-$ npm start
+    $ npm start
 
 ## Configurar a API
+
 https://github.com/guilhermenunes09/debts-app-code7/blob/main/README.md
 
