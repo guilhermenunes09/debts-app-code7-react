@@ -1,14 +1,9 @@
 import React, { useEffect } from 'react';
 import "./styles/clientCard.css"
 
-function ClientCard (props) {
+// To be in the Debts Index
 
-    useEffect(()=> {
-        console.log("testing");
-        console.log(props.clientCard);
-        console.log(props);
-    });
-  
+function ClientCard (props) {
 
   return (
     <>

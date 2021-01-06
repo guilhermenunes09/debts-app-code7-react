@@ -3,7 +3,6 @@ import ClientCard from '../../components/clientCard.jsx';
 
 function ClientsIndex (props) {
 
-
   return (
     <div className="ClientsList">
         {props.clientsProp && props.clientsProp.map(function (item, i) {
@@ -13,5 +12,5 @@ function ClientsIndex (props) {
   );
 }
   
-  export default ClientsIndex;
+export default ClientsIndex;
   

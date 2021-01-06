@@ -1,48 +1,93 @@
 import React, { useState, useEffect, useRef, createContext } from 'react';
-import DebtsList from '../../components/debtsList.jsx';
+import DebtsList from './debtsList.jsx';
 import { axiosPost } from '../../components/postData.jsx';
 import { API_RAILS } from '../../apiAccess/config.js';
 import '../../components/styles/debtsNew.css';
-import { idContext } from '../../contexts/idContext.js';
+import { currentClient } from '../../contexts/currentClient.js';
+
+// This Component it's both visualization and editing, depending
+// on whether the client ID is 0 or different than 0           
+// if 0, the component 'thinks' that the user wants to create a new record  
 
 function DebtsNew (props) {
 
+    /* Declaring Component States */
     let [id, setId] = useState(0);
-    const inputClient = useRef(null);
-    const inputReason = useRef(null);
-    const inputAmount = useRef(null);
-    const inputWhen = useRef(null);
+    let [idArray, setIdArray] = useState(0);
+    let [debtList, setDebtList] = useState();
+    let [clientData, setClientData] = useState({
+        reason: " r ",
+        amount: 5,
+        when: "200-01-01",
+    });
+    let [myClient, setMyClient] = useState();
+
+    useEffect(()=> {
+        if(debtList && typeof debtList[idArray] !== "undefined") {
+            const dl = debtList[idArray];
+            const clientData = {
+                reason: dl.reason,
+                amount: dl.amount,
+                when: dl.when,
+            }
+            setClientData(clientData);
+        }
+
+        if(props.clientsProp && typeof props.clientsProp[idArray] !== "undefined") {
+            console.log("SET CLIENT");
+            console.log(props.clientsProp[idArray])
+            setMyClient(JSON.stringify(props.clientsProp[idArray]));
+        }
+
+
+    },[idArray]);
+
     
-    let value = {
-        id: id,
-        updateId: updateId
-    }
 
+    /* Declaring Form references */
+    const inputClient = useRef(null);  const inputReason = useRef(null);
+    const inputAmount = useRef(null);   const inputWhen = useRef(null);
 
-    const handleClick = () => {
-        console.log("Clicking");
-        console.log(inputReason.current.value);
-        console.log(inputAmount.current.value);
-        console.log(inputWhen.current.value);
-        console.log(inputClient.current.value);
-       
+    /* Get Form Data and Send it to local API */
+    const handleClick = () => {       
+        console.log("Get Client info");
+        console.log(inputClient);
+        const selected = inputClient.current.selectedIndex;
+        console.log(inputClient.current[selected].getAttribute("data-value"));
+        const myClient = inputClient.current[selected].getAttribute("data-value");
+
         const dataPost = {
             reason:inputReason.current.value,
             amount:inputAmount.current.value,
             when:inputWhen.current.value,
-            client: inputClient.current.value,
+            client: myClient
         };
-
         axiosPost(dataPost, API_RAILS);
     }
 
-    function updateId (key, id) {
-        console.log("Lets Update");
+    /* Use Context Config */
+    let value = {
+        id: id,
+        idArray: idArray,
+        updateClientId: updateClientId,
+        updateArrayId: updateArrayId,
+        updateDebtList: updateDebtList,
+    }
+
+    function updateClientId (key=1, id) {
         setId(id);
      }
+     function updateArrayId (key=32, idArray) {
+         setIdArray(idArray);
+     }
+     function updateDebtList (key=3, debtList) {
+         setDebtList(debtList);
+     }
+
 
     return(
-        <idContext.Provider value={{value}}>
+        <currentClient.Provider value={{value}}>
+
             <div className="container text-left">
                 <div className="row">
                     <div className="col-sm-3 border border-danger">
@@ -51,39 +96,35 @@ function DebtsNew (props) {
                     <div className="col-sm-9 border border-warning">
                         <div className="debt-new d-flex p-4 m-2 border border-info bd-highlight">
                             <form>
-                                <select ref={inputClient} className="form-control form-control-lg">
+                                <select value={idArray} ref={inputClient} className="form-control form-control-lg">
                                     {props.clientsProp && props.clientsProp.map(function (item, i) {
-                                        return <option value={JSON.stringify(item)}>{item.name}</option>
+                                        return <option value={i} data-value={JSON.stringify(item)}>{item.name}</option>
                                     })}
                                 </select>
                                 <div className="form-group">
                                     <label for="formGroupExampleInput">Motivo</label>
-                                    <input ref={inputReason} type="text" class="form-control" id="formGroupExampleInput" placeholder="" />
+                                    <input defaultValue={clientData.reason} ref={inputReason} type="text" class="form-control" id="formGroupExampleInput" placeholder="" />
                                 </div>
                                 <div className="form-group">
                                     <label for="formGroupExampleInput" class="mr-sm-2">Valor</label>
                                     <div className="form-inline">
-                                        <input ref={inputAmount} type="number" min="0.00" max="9000000.00" step="0.01" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="R$" />
+                                        <input defaultValue={clientData.amount}  ref={inputAmount} type="number" min="0.00" max="9000000.00" step="0.01" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="R$" />
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <label for="formGroupExampleInput" class="mr-sm-2">Data</label>
                                     <div className="form-inline">
-                                        <input ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
+                                        <input defaultValue={clientData.when}  ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
                                     </div>
                                 </div>
-
-                                <input type="hidden" name="id" value="0" />
-
                                 <button type="button" class="btn btn-outline-secondary">Excluir</button>
                                 <button onClick={handleClick} type="button" class="btn btn-outline-primary">Salvar</button>
-
                             </form>
                         </div>
                     </div>    
                 </div>
             </div>
-        </idContext.Provider>
+        </currentClient.Provider>
     )
 }
 

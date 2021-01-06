@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
-export let axiosGet = function(url) {
+export let axiosGet = function(url, id=0) {
     return new Promise (
         function(resolve, reject) {
+            if(id===0) {
+                id="";
+            }
             // Make a request for a user with a given ID
-            Axios.get(url)
+            Axios.get(url + '/' + id)
             .then(function (response) {
                 // handle success
                 const data = response.data;
@@ -17,8 +19,8 @@ export let axiosGet = function(url) {
                 reject(error);
             })
             .then(function () {
-                console.log("Request Finished")
                 // always executed
             });
-        }); 
+        }
+    ); 
 }
