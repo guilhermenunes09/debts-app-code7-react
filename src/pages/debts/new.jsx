@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef, createContext } from 'react';
 import DebtsList from './debtsList.jsx';
 import { axiosPost } from '../../components/postData.jsx';
 import { axiosGet } from '../../components/fetchData.jsx';
-import { API_RAILS } from '../../apiAccess/config.js';
+import { axiosDelete } from '../../components/deleteData.jsx';
+import { API_JSON, API_RAILS } from '../../apiAccess/config.js';
 import '../../components/styles/debtsNew.css';
 import { currentClient } from '../../contexts/currentClient.js';
 
@@ -49,8 +50,6 @@ function DebtsNew (props) {
     const handleClick = () => {       
         const selected = inputClient.current.selectedIndex;
         const myClient = inputClient.current[selected].getAttribute("data-value");
-        console.log("POST ID");
-        console.log(id);
         const dataPost = {
             id: id,
             reason:inputReason.current.value,
@@ -60,28 +59,23 @@ function DebtsNew (props) {
         };
         axiosPost(dataPost, API_RAILS).then((response) => {
             if(response.status === 200) {
-                console.log("Sucesos");
-                console.log(response.data);
-                //let newDebtList = debtList.unshift(response.data.debt)
-                console.log("BEFORE");
-                console.log(debtList);
                 setDebtList(debtList => [...debtList, response.data.debt]);
-                console.log("AFTER");
-                //console.log(newDebtList);
 
-                
-                //setDebtList(newDebtList)
             } else {
-                console.log("Falhou");
+                console.log("Requisição ao servidor retornou uma falha.");
             }
         });
     }
 
-    useEffect(() => {
-        console.log("AFTER")
-        console.log(debtList);
-    },[debtList])
-
+    const handleClickExclude = () => {
+        axiosDelete(API_RAILS, id).then(response => {
+            if(response.status == 200) {
+                console.log("Sucesso!");
+            } else {
+                console.log("Falhou!");
+            }
+        });
+    }
      
 
     /* Use Context Config */
@@ -146,7 +140,7 @@ function DebtsNew (props) {
                                         <input defaultValue={clientData.when}  ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-outline-secondary">Excluir</button>
+                                <button onClick={handleClickExclude} type="button" class="btn btn-outline-secondary">Excluir</button>
                                 <button onClick={handleClick} type="button" class="btn btn-outline-primary">Salvar</button>
                             </form>
                         </div>

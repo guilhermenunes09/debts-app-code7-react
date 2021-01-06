@@ -1,7 +1,9 @@
 
+const HOST = process.env.REACT_APP_API_HOST
+
 const api = {
     rails: {
-        host: 'http://localhost:3000/',
+        host: HOST,
         api: 'api/debts',
     },
     jsonplaceholder: {
