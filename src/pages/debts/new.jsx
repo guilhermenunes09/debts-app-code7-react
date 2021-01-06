@@ -17,9 +17,9 @@ function DebtsNew (props) {
     let [idArray, setIdArray] = useState(0);
     let [debtList, setDebtList] = useState();
     let [clientData, setClientData] = useState({
-        reason: " r ",
-        amount: 5,
-        when: "200-01-01",
+        reason: " ",
+        amount: 0.00,
+        when: "00-00-0000",
     });
 
     useEffect(()=> {
@@ -100,11 +100,22 @@ function DebtsNew (props) {
          setIdArray(idArray);
      }
 
+     function setIdToZero (key=39, id=0) {
+         setId(id);
+         setIdArray(id);
+         setClientData({
+            reason: " ",
+            amount: 0.00,
+            when: "00-00-0000",
+         });
+         
+     }
 
 
     return(
         <currentClient.Provider value={{value}}>
             {id}
+            <button onClick={setIdToZero} class="button button-new"></button>
             <div className="container text-left">
                 <div className="row">
                     <div className="col-sm-3 border border-danger">
@@ -113,7 +124,8 @@ function DebtsNew (props) {
                     <div className="col-sm-9 border border-warning">
                         <div className="debt-new d-flex p-4 m-2 border border-info bd-highlight">
                             <form key={id}>
-                                <select defaultValue={idArray} ref={inputClient} className="form-control form-control-lg">
+                                <select defaultValue={idArray || ''} ref={inputClient} className="form-control form-control-lg">
+                                    <option disabled={true} value="">Escolha um cliente</option>
                                     {props.clientsProp && props.clientsProp.map(function (item, i) {
                                         return <option value={i} data-value={JSON.stringify(item)}>{item.name}</option>
                                     })}
