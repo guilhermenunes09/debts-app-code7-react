@@ -1,74 +1,91 @@
 
-import React, { useState, useEffect, createContext } from 'react'
+import React, { useState, useEffect, createContext, useContext } from 'react'
+import { DebtsContext } from './contexts/currentClient.js';
 import './App.css';
 
-import { API_JSON } from './apiAccess/config.js';
+import { API_JSON, API_RAILS } from './apiAccess/config.js';
 import { axiosGet } from './components/fetchData.jsx';
 
 /* Pages with Components */
 import ClientsIndex from './pages/clients/index';
 import DebtsNew from './pages/debts/new';
-
 import Nav from './pages/navigation/nav.jsx';
 
 
-const selectedIdContext = createContext();
-export const selectedIdConsumer = selectedIdContext.Consumer;
 
 function App() {
 
-  const [clientsTable, setClientsTable] = useState([]);
-  const [selectedId, setSelectedId] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [debts, setDebts] = useState();
 
-  const getData = () => {
+  
+
+  const getDebts = () => {
+    axiosGet(API_RAILS).then(response => {
+      setDebts(response);
+  });
+  }
+
+  const getClients = () => {
     axiosGet(API_JSON).then(res => {
-      setClientsTable(res);
+      setClients(res);
     });
   }
 
-  useEffect( 
+  useEffect(
     () => {
-      getData();
-    
+      getClients();
+      getDebts();
     },[]
   );
 
   useEffect(()=>{
     console.log("Clients");
-    console.log(clientsTable);
-  },[clientsTable])
+    console.log(clients);
+    console.log("Debts");
+    console.log(debts);
+  },[debts])
+
+
+  const value = {
+    id: 4,
+    clients: clients,
+    debts: debts,
+  }
+  
 
   return (
-      <div className="App">
-
-
-        <nav class="navbar navbar-dark bg-dark mb-4">
-          <a class="navbar-brand" href="#">Debts App</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Início<span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Registrar</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-              </li>
-            </ul>
-            <span class="navbar-text">
-              
-            </span>
-          </div>
-        </nav>
-        <h1>Adicionar Dívida</h1>
-        <DebtsNew clientsProp={clientsTable} />
-        
-        {/* <ClientsIndex clientsProp={clientsTable}/> */}
-      </div>
+    <DebtsContext.Provider value={value}>
+        <div className="App">
+          <nav class="navbar navbar-dark bg-dark mb-4">
+            <a class="navbar-brand" href="#">Debts App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Início<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Registrar</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Login</a>
+                </li>
+              </ul>
+              <span class="navbar-text">
+                
+              </span>
+            </div>
+          </nav>
+          <h1>Adicionar Dívida</h1>
+          
+          <DebtsNew />
+          
+          {/* <ClientsIndex clientsProp={clientsTable}/> */}
+        </div>
+      </DebtsContext.Provider>
   );
 }
 

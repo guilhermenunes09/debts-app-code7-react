@@ -6,6 +6,7 @@ export let axiosDelete = function(url, id=0) {
             if(id===0) {
                 id="";
             }
+            
             // Make a request for a user with a given ID
             Axios.delete(url + '/' + id)
             .then(function (response) {
