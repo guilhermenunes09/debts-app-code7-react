@@ -13,12 +13,12 @@ function NewForm () {
     
 
     /* Get Form Data and Send it to local API */
-    const handleClick = () => {       
+    const handleClickSave = () => {       
         const selected = inputClient.current.selectedIndex;
         const myClient = inputClient.current[selected].getAttribute("data-value");
         /////////////////CHANGE HERE ID AS SOON AS POSSIBLE
         const dataPost = {
-            id: 0,
+            id: value.selectedClient.id,
             reason:inputReason.current.value,
             amount:inputAmount.current.value,
             when:inputWhen.current.value,
@@ -26,7 +26,7 @@ function NewForm () {
         };
         axiosPost(dataPost, API_RAILS).then((response) => {
             if(response.status === 200) {
-                //setDebtList(debtList => [...debtList, response.data.debt]);
+                value.updateDebts(response.data.debt);
 
             } else {
                 console.log("Requisição ao servidor retornou uma falha.");
@@ -70,7 +70,7 @@ function NewForm () {
                     </div>
                 </div>
                 <button onClick={handleClickExclude} type="button" class="btn btn-outline-secondary">Excluir</button>
-                <button onClick={handleClick} type="button" class="btn btn-outline-primary">Salvar</button>
+                <button onClick={handleClickSave} type="button" class="btn btn-outline-primary">Salvar</button>
             </form>
         </>
     );

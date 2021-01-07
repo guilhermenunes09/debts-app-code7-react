@@ -7,30 +7,20 @@ function DebtsList () {
     const value = useContext(DebtsContext);
 
     /* Declaring Component States */
-    let [id, setId] = useState(0);
-    let [idArray, setIdArray] = useState(0);
-    let [debtList, setDebtList] = useState();
-
-
-    let [clientData, setClientData] = useState({
-        id: 0,
-        reason: " ",
-        amount: 0.00,
-        when: "00-00-0000",
-    });
+    let [selectedIdArray, setSelectedIdArray] = useState(0);
 
     useEffect(()=> {
-        if(value.debts && typeof value.debts[idArray] !== "undefined") {
-            const dl = value.debts[idArray];
+        if(value.debts && typeof value.debts[selectedIdArray] !== "undefined") {
+            const dl = value.debts[selectedIdArray];
             const clientData = {
-                id: dl.client.id,
+                oid: value.selectedOid,
                 reason: dl.reason,
                 amount: dl.amount,
                 when: dl.when,
             }
             value.updateSelectedClient(clientData);
         }
-    },[idArray]);
+    },[selectedIdArray]);
     
     /* Local States */
     const debt = useRef(null);
@@ -42,9 +32,10 @@ function DebtsList () {
         console.log(e);
         //e.currentTarget.className = "debt-item-selected"
         /* ID MongoDb */
-        setId(e.currentTarget.getAttribute("value"));
+        value.updateSelectedOid(e.currentTarget.getAttribute("value"));
         /* ID Local Array */
-        setIdArray(e.currentTarget.id);
+        setSelectedIdArray(e.currentTarget.id);
+        value.updateSelectedIdArray(e.currentTarget.id);
     }
 
     let StyleClass = {
@@ -56,10 +47,10 @@ function DebtsList () {
         <>
             <button class="button button-new"></button>
             <div className="d-flex flex-column bd-highlight mb-3 text-center">
-                ID: {id}
+                ID: {value.selectedOid}
                 { value.debts && value.debts.reverse().map((item,i) => {
 
-                    return <div className={id === item._id.$oid ? StyleClass.selected : StyleClass.notSelected} key={i} ref={debt} value={item._id.$oid} id={i}  onClick={(e) => handleClick(e)}><p>{ item.client.name }</p> <p>R${ item.amount }</p></div>                        
+                    return <div className={value.selectedOid === item._id.$oid ? StyleClass.selected : StyleClass.notSelected} key={i} ref={debt} value={item._id.$oid} id={i}  onClick={(e) => handleClick(e)}><p>{ item.client.name }</p> <p>R${ item.amount }</p></div>                        
      
                 })}
             </div>

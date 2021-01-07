@@ -25,7 +25,8 @@ function App() {
       when: ""
     }
   });
-
+  const [selectedOid, setSelectedOid] = useState();
+  const [selectedIdArray, setSelectedIdArray] = useState();
   
 
   const getDebts = () => {
@@ -60,12 +61,29 @@ function App() {
     console.log(client);
   }
 
+  const updateDebts = (debt) => {
+    setDebts(debts => [...debts, debt]);
+  }
+
+  const updateSelectedOid = (oid) => {
+    setSelectedOid(oid);
+  }
+
+  const updateSelectedIdArray = (idArray) => {
+    setSelectedIdArray(idArray)
+  }
+
   const value = {
     id: 4,
     clients: clients,
     debts: debts,
     selectedClient: selectedClient,
-    updateSelectedClient: updateSelectedClient
+    selectedOid: selectedOid,
+    selectedIdArray: selectedIdArray,
+    updateSelectedClient: updateSelectedClient,
+    updateSelectedOid: updateSelectedOid,
+    updateSelectedIdArray: updateSelectedIdArray,
+    updateDebts: updateDebts
   }
   
 
