@@ -17,8 +17,9 @@ function NewForm () {
         const selected = inputClient.current.selectedIndex;
         const myClient = inputClient.current[selected].getAttribute("data-value");
         /////////////////CHANGE HERE ID AS SOON AS POSSIBLE
+        const oid = value.selectedClient ? value.selectedClient._id.$oid : 0;
         const dataPost = {
-            id: value.selectedClient.id,
+            id: oid,
             reason:inputReason.current.value,
             amount:inputAmount.current.value,
             when:inputWhen.current.value,
@@ -26,6 +27,8 @@ function NewForm () {
         };
         axiosPost(dataPost, API_RAILS).then((response) => {
             if(response.status === 200) {
+                console.log("CHECK RESPONSE");
+                console.log(response.data);
                 value.updateDebts(response.data.debt);
 
             } else {
@@ -38,6 +41,7 @@ function NewForm () {
         axiosDelete(API_RAILS, 0).then(response => {
             if(response.status == 200) {
                 console.log("Sucesso!");
+                console.log(response);
             } else {
                 console.log("Falhou!");
             }
@@ -47,7 +51,7 @@ function NewForm () {
     return(
         <>
             <form key={new Date().getTime()}>
-                <select defaultValue={value.selectedClient.id || ''} disabled={  false }  ref={inputClient} className="form-control form-control-lg">
+                <select defaultValue={value.selectedClient && value.selectedClient.client.id} disabled={  false }  ref={inputClient} className="form-control form-control-lg">
                     <option disabled={true} value="">Escolha um cliente</option>
                     {value.clients && value.clients.map(function (item, i) {
                         return <option value={item.id} data-value={JSON.stringify(item)}>{item.name}</option>
@@ -55,18 +59,18 @@ function NewForm () {
                 </select>
                 <div className="form-group">
                     <label for="formGroupExampleInput">Motivo</label>
-                    <input defaultValue={value.selectedClient.reason} ref={inputReason} type="text" class="form-control" id="formGroupExampleInput" placeholder="" />
+                    <input defaultValue={value.selectedClient && value.selectedClient.reason} ref={inputReason} type="text" class="form-control" id="formGroupExampleInput" placeholder="" />
                 </div>
                 <div className="form-group">
                     <label for="formGroupExampleInput" class="mr-sm-2">Valor</label>
                     <div className="form-inline">
-                        <input defaultValue={value.selectedClient.amount}  ref={inputAmount} type="number" min="0.00" max="9000000.00" step="0.01" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="R$" />
+                        <input defaultValue={value.selectedClient && value.selectedClient.amount}  ref={inputAmount} type="number" min="0.00" max="9000000.00" step="0.01" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="R$" />
                     </div>
                 </div>
                 <div className="form-group">
                     <label for="formGroupExampleInput" class="mr-sm-2">Data</label>
                     <div className="form-inline">
-                        <input defaultValue={value.selectedClient.when}  ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
+                        <input defaultValue={value.selectedClient && value.selectedClient.when}  ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
                     </div>
                 </div>
                 <button onClick={handleClickExclude} type="button" class="btn btn-outline-secondary">Excluir</button>
