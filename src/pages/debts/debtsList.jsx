@@ -13,6 +13,7 @@ function DebtsList () {
 
 
     let [clientData, setClientData] = useState({
+        id: 0,
         reason: " ",
         amount: 0.00,
         when: "00-00-0000",
@@ -22,18 +23,17 @@ function DebtsList () {
         if(value.debts && typeof value.debts[idArray] !== "undefined") {
             const dl = value.debts[idArray];
             const clientData = {
+                id: dl.client.id,
                 reason: dl.reason,
                 amount: dl.amount,
                 when: dl.when,
             }
-            setClientData(clientData);
+            value.updateSelectedClient(clientData);
         }
     },[idArray]);
     
     /* Local States */
     const debt = useRef(null);
-
-    const [activeIndex, setActiveIndex] = useState();
 
     /* When Item selected, update Context Provider */
     const handleClick = (e) => {

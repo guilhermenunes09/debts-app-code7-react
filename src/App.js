@@ -17,6 +17,14 @@ function App() {
 
   const [clients, setClients] = useState([]);
   const [debts, setDebts] = useState();
+  const [selectedClient, setSelectedClient] = useState({
+    selectedClient: {
+      id: 0,
+      reason: "",
+      amount: "",
+      when: ""
+    }
+  });
 
   
 
@@ -46,11 +54,18 @@ function App() {
     console.log(debts);
   },[debts])
 
+  const updateSelectedClient = (client) => {
+    setSelectedClient(client);
+    console.log("CHECKCLIENT");
+    console.log(client);
+  }
 
   const value = {
     id: 4,
     clients: clients,
     debts: debts,
+    selectedClient: selectedClient,
+    updateSelectedClient: updateSelectedClient
   }
   
 
