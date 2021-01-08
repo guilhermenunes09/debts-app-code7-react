@@ -10,7 +10,12 @@ export let axiosGet = function(url, id=0) {
                 id="";
             }
             // Make a request for a user with a given ID
-            Axios.get(url + '/' + id)
+            Axios.get(url + '/' + id, {
+                headers: {
+                    'X-User-Token': localStorage.getItem('token'),
+                    'X-User-Email': localStorage.getItem('email')
+                }
+            })
             .then(function (response) {
                 // handle success
                 const data = response.data;

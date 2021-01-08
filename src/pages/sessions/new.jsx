@@ -20,6 +20,8 @@ function SessionsNew () {
         axiosPost(dataPost, API_RAILS_USER.concat('/sign_in')).then(res => {
             if(res.status === 201) {
                 console.log("SUCESS");
+                setLocalStorage('email',res.data.email)
+                setLocalStorage('token', res.data.authentication_token)
             }
             console.log("Requested")
             console.log(res);
