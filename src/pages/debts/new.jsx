@@ -2,9 +2,6 @@ import React, { useState, useEffect, useRef, useContext, useCallback } from 'rea
 import { DebtsContext } from '../../contexts/currentClient.js';
 import DebtsList from './debtsList.jsx';
 import NewForm from './newForm.jsx';
-import { axiosPost } from '../../components/postData.jsx';
-import { axiosDelete } from '../../components/deleteData.jsx';
-import { API_JSON, API_RAILS } from '../../apiAccess/config.js';
 import '../../components/styles/debtsNew.css';
 
 

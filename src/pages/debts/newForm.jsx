@@ -16,7 +16,6 @@ function NewForm () {
     const handleClickSave = () => {       
         const selected = inputClient.current.selectedIndex;
         const myClient = inputClient.current[selected].getAttribute("data-value");
-        /////////////////CHANGE HERE ID AS SOON AS POSSIBLE
         const oid = value.selectedClient ? value.selectedClient._id.$oid : 0;
         const dataPost = {
             id: oid,
@@ -79,8 +78,8 @@ function NewForm () {
                         <input disabled={value.editMode ? false : true} defaultValue={value.selectedClient && value.selectedClient.when}  ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
                     </div>
                 </div>
-                <button onClick={() => handleClickExclude ()} type="button" class="btn btn-outline-secondary">Excluir</button>
-                <button onClick={() => handleClickEdit ()} type="button" class="btn btn-outline-secondary">Editar</button>
+                <button onClick={() => handleClickExclude ()} type="button" class="btn btn-outline-secondary mr-2">Excluir</button>
+                <button onClick={() => handleClickEdit ()} type="button" class="btn btn-outline-secondary mr-2">Editar</button>
                 <button disabled={value.editMode ? false : true} onClick={() => handleClickSave ()} type="button" class="btn btn-outline-primary">Salvar</button>
             </form>
         </>
