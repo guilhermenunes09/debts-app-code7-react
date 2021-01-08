@@ -4,11 +4,11 @@ const axiosPost = (dataPost, url) =>
 {
     return new Promise(
         function(resolve, reject) {
-            let data = {
-                debt: dataPost
-            }
-
-            Axios.post(url, data, {
+            console.log("CHECK URL");
+            console.log(url);
+            console.log("CHECK DATA");
+            console.log(dataPost);
+            Axios.post(url, dataPost, {
                 headers: {
                     'Content-Type': 'application/json',  
                 },

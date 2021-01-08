@@ -11,6 +11,7 @@ import ClientsIndex from './pages/clients/index';
 import DebtsNew from './pages/debts/new';
 import Nav from './pages/navigation/nav.jsx';
 import SessionsNew from './pages/sessions/new.jsx';
+import RegistrationsNew from './pages/registrations/new.jsx';
 
 
 
@@ -119,6 +120,7 @@ function App() {
             </div>
           </nav>
           <h1>Adicionar Dívida</h1>
+          <RegistrationsNew />
           <SessionsNew />
           <DebtsNew />
           

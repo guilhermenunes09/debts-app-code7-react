@@ -18,11 +18,13 @@ function NewForm () {
         const myClient = inputClient.current[selected].getAttribute("data-value");
         const oid = value.selectedClient ? value.selectedClient._id.$oid : 0;
         const dataPost = {
-            id: oid,
-            reason:inputReason.current.value,
-            amount:inputAmount.current.value,
-            when:inputWhen.current.value,
-            client: myClient
+            debt: {
+                id: oid,
+                reason:inputReason.current.value,
+                amount:inputAmount.current.value,
+                when:inputWhen.current.value,
+                client: myClient
+            }
         };
         axiosPost(dataPost, API_RAILS).then((response) => {
             if(response.status === 200) {
