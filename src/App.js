@@ -19,7 +19,7 @@ function App() {
   const [debts, setDebts] = useState();
   const [selectedClient, setSelectedClient] = useState();
   const [selectedIdArray, setSelectedIdArray] = useState();
-  
+  const [editMode, setEditMode] = useState();
 
   const getDebts = () => {
     axiosGet(API_RAILS).then(response => {
@@ -47,6 +47,15 @@ function App() {
     console.log(debts);
   },[debts])
 
+  useEffect(()=> {
+    if (selectedClient) {
+      updateEditMode(false)
+    } else {
+      updateEditMode(true)
+    }
+    
+  },[selectedClient])
+
   const updateSelectedClient = (client) => {
     setSelectedClient(client);
     console.log("CHECKCLIENT");
@@ -61,15 +70,21 @@ function App() {
     setSelectedIdArray(idArray)
   }
 
+  const updateEditMode = (editMode) => {
+    setEditMode(editMode);
+  }
+
   const value = {
     id: 4,
     clients: clients,
     debts: debts,
     selectedClient: selectedClient,
     selectedIdArray: selectedIdArray,
+    editMode: editMode,
     updateSelectedClient: updateSelectedClient,
     updateSelectedIdArray: updateSelectedIdArray,
-    updateDebts: updateDebts
+    updateDebts: updateDebts,
+    updateEditMode: updateEditMode
   }
   
 
