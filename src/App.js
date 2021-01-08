@@ -87,10 +87,14 @@ function App() {
     updateEditMode: updateEditMode
   }
   
+  const handleClickNew = () => {
+    updateSelectedClient(null);
+  }
 
   return (
     <DebtsContext.Provider value={value}>
         <div className="App">
+        <button onClick={handleClickNew} class="button button-new"></button>
           <nav class="navbar navbar-dark bg-dark mb-4">
             <a class="navbar-brand" href="#">Debts App</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">

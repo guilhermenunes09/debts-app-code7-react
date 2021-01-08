@@ -22,7 +22,6 @@ function DebtsList () {
 
     return(
         <>
-            <button class="button button-new"></button>
             <div className="d-flex flex-column bd-highlight mb-3 text-center">
                 ID: {value.selectedClient && value.selectedClient._id.$oid}
                 { value.debts && value.debts.map((item,i) => {
