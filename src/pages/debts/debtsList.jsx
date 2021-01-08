@@ -25,7 +25,7 @@ function DebtsList () {
             <button class="button button-new"></button>
             <div className="d-flex flex-column bd-highlight mb-3 text-center">
                 ID: {value.selectedClient && value.selectedClient._id.$oid}
-                { value.debts && value.debts.reverse().map((item,i) => {
+                { value.debts && value.debts.map((item,i) => {
                     console.log(item);
                     console.log("ITEM")
                     console.log("Client");

@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { DebtsContext } from '../../contexts/currentClient.js';
 import { axiosPost } from '../../components/postData.jsx';
 import { axiosDelete } from '../../components/deleteData.jsx';
@@ -10,6 +10,8 @@ function NewForm () {
       /* Declaring Form references */
       const inputClient = useRef(null);  const inputReason = useRef(null);
       const inputAmount = useRef(null);   const inputWhen = useRef(null);
+
+      const [editMode, setEditMode] = useState(false);
     
 
     /* Get Form Data and Send it to local API */
@@ -48,10 +50,14 @@ function NewForm () {
         });
     }
 
+    const handleClickEdit = () => {
+        setEditMode(true);
+    }
+    const selectDefaultValue = value.selectedClient ? value.selectedClient.client.id : ""
     return(
         <>
             <form key={new Date().getTime()}>
-                <select defaultValue={value.selectedClient && value.selectedClient.client.id} disabled={  false }  ref={inputClient} className="form-control form-control-lg">
+                <select disabled={editMode ? false : true} defaultValue={selectDefaultValue}  ref={inputClient} className="form-control form-control-lg">
                     <option disabled={true} value="">Escolha um cliente</option>
                     {value.clients && value.clients.map(function (item, i) {
                         return <option value={item.id} data-value={JSON.stringify(item)}>{item.name}</option>
@@ -59,22 +65,23 @@ function NewForm () {
                 </select>
                 <div className="form-group">
                     <label for="formGroupExampleInput">Motivo</label>
-                    <input defaultValue={value.selectedClient && value.selectedClient.reason} ref={inputReason} type="text" class="form-control" id="formGroupExampleInput" placeholder="" />
+                    <input disabled={editMode ? false : true} defaultValue={value.selectedClient && value.selectedClient.reason} ref={inputReason} type="text" class="form-control" id="formGroupExampleInput" placeholder="" />
                 </div>
                 <div className="form-group">
                     <label for="formGroupExampleInput" class="mr-sm-2">Valor</label>
                     <div className="form-inline">
-                        <input defaultValue={value.selectedClient && value.selectedClient.amount}  ref={inputAmount} type="number" min="0.00" max="9000000.00" step="0.01" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="R$" />
+                        <input disabled={editMode ? false : true} defaultValue={value.selectedClient && value.selectedClient.amount}  ref={inputAmount} type="number" min="0.00" max="9000000.00" step="0.01" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="R$" />
                     </div>
                 </div>
                 <div className="form-group">
                     <label for="formGroupExampleInput" class="mr-sm-2">Data</label>
                     <div className="form-inline">
-                        <input defaultValue={value.selectedClient && value.selectedClient.when}  ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
+                        <input disabled={editMode ? false : true} defaultValue={value.selectedClient && value.selectedClient.when}  ref={inputWhen} type="date" class="form-control mb-2 mr-sm-2" id="formGroupExampleInput" placeholder="Ex: 10-12-2020" />
                     </div>
                 </div>
                 <button onClick={handleClickExclude} type="button" class="btn btn-outline-secondary">Excluir</button>
-                <button onClick={handleClickSave} type="button" class="btn btn-outline-primary">Salvar</button>
+                <button onClick={handleClickEdit} type="button" class="btn btn-outline-secondary">Editar</button>
+                <button disabled={editMode ? false : true} onClick={handleClickSave} type="button" class="btn btn-outline-primary">Salvar</button>
             </form>
         </>
     );

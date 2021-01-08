@@ -54,7 +54,7 @@ function App() {
   }
 
   const updateDebts = (debt) => {
-    setDebts(debts => [...debts, debt]);
+    setDebts(debts => [debt, ...debts]);
   }
 
   const updateSelectedIdArray = (idArray) => {
