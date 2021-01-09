@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { axiosPost } from '../../components/postData.jsx';
 import { API_RAILS_USER } from '../../apiAccess/config.js';
+import { Link } from 'react-router-dom';
 
 function RegistrationsNew () {
 
@@ -52,7 +53,9 @@ function RegistrationsNew () {
                     </form>
             
             </div>
-            <button onClick={() => handleClick ()} type="button" class="btn btn-outline-primary mr-2">Registrar</button>
+            <button onClick={() => handleClick ()} type="button" class="btn btn-outline-primary mr-2">Registrar</button><br />
+            <Link to='/login' >Logar</Link>
+
         </div>
         </div>
     );

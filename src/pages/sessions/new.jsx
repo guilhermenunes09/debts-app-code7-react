@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { axiosPost } from '../../components/postData.jsx';
 import { API_RAILS_USER } from '../../apiAccess/config.js';
 import { setLocalStorage } from '../../components/localStorage.jsx';
-
+import { Link } from 'react-router-dom';
 
 function SessionsNew () {
 
@@ -46,7 +46,8 @@ function SessionsNew () {
                     </form>
             
             </div>
-            <button onClick={() => handleClick ()} type="button" class="btn btn-outline-primary mr-2">Entrar</button>
+            <button onClick={() => handleClick ()} type="button" class="btn btn-outline-primary mr-2">Entrar</button><br/>
+            <Link to='/novo' >Registrar-se</Link>
         </div>
         </div>
     );

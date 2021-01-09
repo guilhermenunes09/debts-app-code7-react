@@ -1,6 +1,14 @@
 
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import { DebtsContext } from './contexts/currentClient.js';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory
+} from "react-router-dom";
 import './App.css';
 
 import { API_JSON, API_RAILS } from './apiAccess/config.js';
@@ -17,21 +25,34 @@ import RegistrationsNew from './pages/registrations/new.jsx';
 
 function App() {
 
-  const [clients, setClients] = useState([]);
+  const [clients, setClients] = useState(null);
   const [debts, setDebts] = useState();
   const [selectedClient, setSelectedClient] = useState();
   const [selectedIdArray, setSelectedIdArray] = useState();
   const [editMode, setEditMode] = useState();
+  const [redirect, setRedirect] = useState(false);
+  const history = useHistory();
 
   const getDebts = () => {
     axiosGet(API_RAILS).then(response => {
-      setDebts(response);
+      console.log("Check Debts Response");
+      console.log(response);
+      if(response.status === 200) {
+        setDebts(response.data);
+      }
+      if(response.status === 401) {
+        console.log("REDIRECT");
+        setRedirect(true);
+      }
   });
   }
 
   const getClients = () => {
     axiosGet(API_JSON).then(res => {
-      setClients(res);
+      if(res && res.status === 200) {
+        setClients(res.data);
+      }
+      
     });
   }
 
@@ -95,37 +116,51 @@ function App() {
 
   return (
     <DebtsContext.Provider value={value}>
-        <div className="App">
-        <button onClick={handleClickNew} class="button button-new"></button>
-          <nav class="navbar navbar-dark bg-dark mb-4">
-            <a class="navbar-brand" href="#">Debts App</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Início<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Registrar</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Login</a>
-                </li>
-              </ul>
-              <span class="navbar-text">
-                
-              </span>
-            </div>
-          </nav>
-          <h1>Adicionar Dívida</h1>
-          <RegistrationsNew />
-          <SessionsNew />
-          <DebtsNew />
+        <Router history={history}>
+          { redirect && ( <Redirect to='/login' /> )}
           
-          {/* <ClientsIndex clientsProp={clientsTable}/> */}
-        </div>
+          
+          <div className="App">
+          <button onClick={handleClickNew} class="button button-new"></button>
+            <nav class="navbar navbar-dark bg-dark mb-4">
+              <Link className="navbar-brand" to='/'>Debts App</Link>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#">Início<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Registrar</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                  </li>
+                </ul>
+                <span class="navbar-text">
+                  
+                </span>
+              </div>
+            </nav>
+            <h1>Adicionar Dívida</h1>
+
+            <Switch>
+              <Route path="/novo">
+                <RegistrationsNew />
+              </Route>
+              <Route exact path="/login">
+                <SessionsNew />
+              </Route>
+              <Route exact path="/">
+                <DebtsNew />
+              </Route>
+            </Switch>
+            
+            {/* <ClientsIndex clientsProp={clientsTable}/> */}
+          </div>
+        </Router>
       </DebtsContext.Provider>
   );
 }
