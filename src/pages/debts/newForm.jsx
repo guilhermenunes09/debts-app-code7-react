@@ -30,7 +30,10 @@ function NewForm () {
             if(response.status === 200) {
                 console.log("CHECK RESPONSE");
                 console.log(response.data);
-                value.updateDebts(response.data.debt);
+                value.updateEditMode(false);
+                if(value.editMode === false) {
+                    value.updateDebts(response.data.debt);
+                }
 
             } else {
                 console.log("Requisição ao servidor retornou uma falha.");

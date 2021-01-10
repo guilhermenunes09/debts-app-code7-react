@@ -4,14 +4,18 @@ const axiosPost = (dataPost, url) =>
 {
     return new Promise(
         function(resolve, reject) {
+
+            const headers = {
+                'X-User-Token': localStorage.getItem('token'),
+                'X-User-Email': localStorage.getItem('email')
+            }
+
             console.log("CHECK URL");
             console.log(url);
             console.log("CHECK DATA");
             console.log(dataPost);
             Axios.post(url, dataPost, {
-                headers: {
-                    'Content-Type': 'application/json',  
-                },
+                headers: headers,
               })
             .then(function (response) {
                 // handle success
