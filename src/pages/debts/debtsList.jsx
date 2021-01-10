@@ -10,8 +10,9 @@ function DebtsList () {
     const debt = useRef(null);
 
     /* When Item selected, update Context Provider */
-    const handleClick = (item) => {
+    const handleClick = (item, selectedIdArray) => {
         value.updateSelectedClient(item);
+        value.updateSelectedIdArray(selectedIdArray);
     }
 
     let StyleClass = {
@@ -24,7 +25,7 @@ function DebtsList () {
         <>
             <div className="d-flex flex-column bd-highlight mb-3 text-center">
                 { value.debts && value.debts.map((item,i) => {
-                    return <div className={oid === item._id.$oid ? StyleClass.selected : StyleClass.notSelected} key={i} ref={debt} value={item} id={i}  onClick={() => handleClick(item)}><p>{ item.client.name }</p> <p>R${ item.amount }</p></div>                        
+                    return <div className={oid === item._id.$oid ? StyleClass.selected : StyleClass.notSelected} key={i} ref={debt} value={item} id={i}  onClick={() => handleClick(item, i)}><p>{ item.client.name }</p> <p>R${ item.amount }</p></div>                        
      
                 })}
             </div>

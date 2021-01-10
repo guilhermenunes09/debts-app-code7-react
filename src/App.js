@@ -76,8 +76,14 @@ function App() {
     setSelectedClient(client);
   }
 
-  const updateDebts = (debt) => {
+  const updateSaveDebts = (debt) => {
     setDebts(debts => [debt, ...debts]);
+  }
+
+  const updateEditDebts = (debt, selectedIdArray) => {
+    const newDebts = debts;
+    newDebts[selectedIdArray] = debt;
+    setDebts(newDebts);
   }
 
   const updateSelectedIdArray = (idArray) => {
@@ -102,9 +108,10 @@ function App() {
     authorized: authorized,
     updateSelectedClient: updateSelectedClient,
     updateSelectedIdArray: updateSelectedIdArray,
-    updateDebts: updateDebts,
+    updateSaveDebts: updateSaveDebts,
     updateEditMode: updateEditMode,
-    updateAuthorized: updateAuthorized
+    updateAuthorized: updateAuthorized,
+    updateEditDebts: updateEditDebts
   }
   
   const handleClickNew = () => {

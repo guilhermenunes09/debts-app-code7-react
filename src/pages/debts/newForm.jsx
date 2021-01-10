@@ -28,12 +28,13 @@ function NewForm () {
         };
         axiosPost(dataPost, API_RAILS).then((response) => {
             if(response.status === 200) {
-                console.log("CHECK RESPONSE");
-                console.log(response.data);
-                value.updateEditMode(false);
                 if(value.editMode === false) {
-                    value.updateDebts(response.data.debt);
+                    value.updateSaveDebts(response.data.debt);
+                } else {
+                    value.updateEditDebts(response.data.debt, value.selectedIdArray);
                 }
+                value.updateSelectedClient(response.data.debt);
+                value.updateEditMode(false);
 
             } else {
                 console.log("Requisição ao servidor retornou uma falha.");
