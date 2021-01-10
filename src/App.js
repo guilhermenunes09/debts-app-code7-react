@@ -31,9 +31,9 @@ function App() {
   const [clients, setClients] = useState(null);
   const [debts, setDebts] = useState();
   const [selectedClient, setSelectedClient] = useState();
-  const [selectedIdArray, setSelectedIdArray] = useState();
+  const [selectedIdArray, setSelectedIdArray] = useState(null);
   const [editMode, setEditMode] = useState();
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState();
   let history = useHistory();
 
   const getDebts = () => {
@@ -43,7 +43,7 @@ function App() {
         setDebts(response.data);
       }
       if(response && response.status === 401) {
-        //setAuthorized(false);
+        setAuthorized(false);
       }
   });
   }
@@ -116,6 +116,7 @@ function App() {
   
   const handleClickNew = () => {
     updateSelectedClient(null);
+    updateSelectedIdArray(null);
   }
 
   return (

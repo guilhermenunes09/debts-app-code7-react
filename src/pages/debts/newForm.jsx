@@ -28,7 +28,7 @@ function NewForm () {
         };
         axiosPost(dataPost, API_RAILS).then((response) => {
             if(response.status === 200) {
-                if(value.editMode === false) {
+                if(value.selectedIdArray === null) {
                     value.updateSaveDebts(response.data.debt);
                 } else {
                     value.updateEditDebts(response.data.debt, value.selectedIdArray);

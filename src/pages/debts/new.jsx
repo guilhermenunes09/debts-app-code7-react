@@ -16,7 +16,17 @@ function DebtsNew (props) {
     useEffect(()=> {
         
     },[]);
-  
+
+    let title = "";
+    if (value.editMode) {
+        title = "Editando ".concat(value.selectedClient && value.selectedClient.client.name);
+        if(value.selectedIdArray === null) {
+            title = "Nova Dívida";
+        }
+    } else {
+        title = value.selectedClient && value.selectedClient.client.name;
+    }
+
     return(
         <>
             <div className="container text-left">
@@ -26,7 +36,10 @@ function DebtsNew (props) {
                     </div>
                     <div className="col-sm-9">
                         <div className="debt-new d-flex p-4 m-2 bd-highlight">
+                            <div>
+                                <h1>{ title } </h1>
                             <NewForm />
+                            </div>
                         </div>
                     </div>    
                 </div>
