@@ -1,9 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import { DebtsContext } from '../../contexts/currentClient.js';
+import { setLocalStorage } from '../../components/localStorage.jsx';
 import { axiosPost } from '../../components/postData.jsx';
 import { API_RAILS_USER } from '../../apiAccess/config.js';
 import { Link } from 'react-router-dom';
 
-function RegistrationsNew () {
+function RegistrationsNew (props) {
+
+    const value = useContext(DebtsContext);
 
     const inputName = useRef(null);
     const inputEmail = useRef(null);
@@ -21,6 +25,10 @@ function RegistrationsNew () {
         axiosPost(dataPost, API_RAILS_USER).then(res => {
             if(res.status === 201) {
                 console.log("SUCESS");
+                setLocalStorage('email',res.data.email);
+                setLocalStorage('token', res.data.authentication_token);
+                value.updateAuthorized(true);
+                props.history.push("/");
             }
             console.log("Requested")
             console.log(res);

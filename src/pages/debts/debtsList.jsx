@@ -23,15 +23,7 @@ function DebtsList () {
     return(
         <>
             <div className="d-flex flex-column bd-highlight mb-3 text-center">
-                ID: {value.selectedClient && value.selectedClient._id.$oid}
                 { value.debts && value.debts.map((item,i) => {
-                    console.log(item);
-                    console.log("ITEM")
-                    console.log("Client");
-                    console.log(value.selectedClient);
-                    if (value.selectedClient) {
-
-                    }
                     return <div className={oid === item._id.$oid ? StyleClass.selected : StyleClass.notSelected} key={i} ref={debt} value={item} id={i}  onClick={() => handleClick(item)}><p>{ item.client.name }</p> <p>R${ item.amount }</p></div>                        
      
                 })}

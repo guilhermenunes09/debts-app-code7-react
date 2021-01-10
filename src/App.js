@@ -15,11 +15,14 @@ import { API_JSON, API_RAILS } from './apiAccess/config.js';
 import { axiosGet } from './components/fetchData.jsx';
 
 /* Pages with Components */
-import ClientsIndex from './pages/clients/index';
-import DebtsNew from './pages/debts/new';
-import Nav from './pages/navigation/nav.jsx';
+import Navbar from './components/navbar.jsx';
 import SessionsNew from './pages/sessions/new.jsx';
+import ClientsIndex from './pages/clients/index';
+import Nav from './pages/navigation/nav.jsx';
+
+import DebtsNew from './pages/debts/new';
 import RegistrationsNew from './pages/registrations/new.jsx';
+
 
 
 
@@ -30,19 +33,17 @@ function App() {
   const [selectedClient, setSelectedClient] = useState();
   const [selectedIdArray, setSelectedIdArray] = useState();
   const [editMode, setEditMode] = useState();
-  const [redirect, setRedirect] = useState(false);
-  const history = useHistory();
+  const [authorized, setAuthorized] = useState(false);
+  let history = useHistory();
 
   const getDebts = () => {
     axiosGet(API_RAILS).then(response => {
-      console.log("Check Debts Response");
-      console.log(response);
       if(response.status === 200) {
+        setAuthorized(true);
         setDebts(response.data);
       }
       if(response.status === 401) {
-        console.log("REDIRECT");
-        setRedirect(true);
+        //setAuthorized(false);
       }
   });
   }
@@ -63,26 +64,16 @@ function App() {
     },[]
   );
 
-  useEffect(()=>{
-    console.log("Clients");
-    console.log(clients);
-    console.log("Debts");
-    console.log(debts);
-  },[debts])
-
   useEffect(()=> {
     if (selectedClient) {
       updateEditMode(false)
     } else {
       updateEditMode(true)
     }
-    
   },[selectedClient])
 
   const updateSelectedClient = (client) => {
     setSelectedClient(client);
-    console.log("CHECKCLIENT");
-    console.log(client);
   }
 
   const updateDebts = (debt) => {
@@ -97,6 +88,10 @@ function App() {
     setEditMode(editMode);
   }
 
+  const updateAuthorized = (authorized) => {
+    setAuthorized(authorized);
+  }
+
   const value = {
     id: 4,
     clients: clients,
@@ -104,10 +99,12 @@ function App() {
     selectedClient: selectedClient,
     selectedIdArray: selectedIdArray,
     editMode: editMode,
+    authorized: authorized,
     updateSelectedClient: updateSelectedClient,
     updateSelectedIdArray: updateSelectedIdArray,
     updateDebts: updateDebts,
-    updateEditMode: updateEditMode
+    updateEditMode: updateEditMode,
+    updateAuthorized: updateAuthorized
   }
   
   const handleClickNew = () => {
@@ -116,52 +113,20 @@ function App() {
 
   return (
     <DebtsContext.Provider value={value}>
+      <div className="App">
         <Router history={history}>
-          { redirect && ( <Redirect to='/login' /> )}
-          
-          
-          <div className="App">
+          <Navbar />
           <button onClick={handleClickNew} class="button button-new"></button>
-            <nav class="navbar navbar-dark bg-dark mb-4">
-              <Link className="navbar-brand" to='/'>Debts App</Link>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">Início<span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Registrar</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                  </li>
-                </ul>
-                <span class="navbar-text">
-                  
-                </span>
-              </div>
-            </nav>
-            <h1>Adicionar Dívida</h1>
 
-            <Switch>
-              <Route path="/novo">
-                <RegistrationsNew />
-              </Route>
-              <Route exact path="/login">
-                <SessionsNew />
-              </Route>
-              <Route exact path="/">
-                <DebtsNew />
-              </Route>
-            </Switch>
-            
-            {/* <ClientsIndex clientsProp={clientsTable}/> */}
-          </div>
+          { authorized === false && ( <Redirect to='/login' />)}
+              <Switch>
+                <Route exact path="/novo" component={RegistrationsNew} />
+                <Route exact path="/login" component={SessionsNew} />
+                <Route exact path="/" component={DebtsNew} />  
+              </Switch>
         </Router>
-      </DebtsContext.Provider>
+      </div>
+    </DebtsContext.Provider>
   );
 }
 

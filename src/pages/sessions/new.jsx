@@ -1,14 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import { DebtsContext } from '../../contexts/currentClient.js';
 import { axiosPost } from '../../components/postData.jsx';
 import { API_RAILS_USER } from '../../apiAccess/config.js';
 import { setLocalStorage } from '../../components/localStorage.jsx';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
-function SessionsNew () {
+function SessionsNew (props) {
 
 
     const inputLogin = useRef(null);
     const inputPassword = useRef(null);
+
+    const value = useContext(DebtsContext);
 
     const handleClick = () => {
         const dataPost = {
@@ -20,8 +23,10 @@ function SessionsNew () {
         axiosPost(dataPost, API_RAILS_USER.concat('/sign_in')).then(res => {
             if(res.status === 201) {
                 console.log("SUCESS");
-                setLocalStorage('email',res.data.email)
-                setLocalStorage('token', res.data.authentication_token)
+                setLocalStorage('email',res.data.email);
+                setLocalStorage('token', res.data.authentication_token);
+                value.updateAuthorized(true);
+                props.history.push("/");
             }
             console.log("Requested")
             console.log(res);
