@@ -38,11 +38,11 @@ function App() {
 
   const getDebts = () => {
     axiosGet(API_RAILS).then(response => {
-      if(response.status === 200) {
+      if(response && response.status === 200) {
         setAuthorized(true);
         setDebts(response.data);
       }
-      if(response.status === 401) {
+      if(response && response.status === 401) {
         //setAuthorized(false);
       }
   });
