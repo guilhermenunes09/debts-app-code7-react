@@ -1,11 +1,10 @@
 
-import React, { useState, useEffect, createContext, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DebtsContext } from './contexts/currentClient.js';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
   useHistory
 } from "react-router-dom";
@@ -17,15 +16,16 @@ import { axiosGet } from './components/fetchData.jsx';
 /* Pages with Components */
 import Navbar from './components/navbar.jsx';
 import SessionsNew from './pages/sessions/new.jsx';
-import ClientsIndex from './pages/clients/index';
-import Nav from './pages/navigation/nav.jsx';
-
 import DebtsNew from './pages/debts/new';
 import RegistrationsNew from './pages/registrations/new.jsx';
 
 
 
-
+/* Initial Data Structure */
+// It avoids 'undefined' errors variables
+// Changes in this structure might break the App completely
+// Check API results from https://jsonplaceholder.typicode.com/users
+// and Rails API http://localhost:3000/api/debts (requires authentication)
 const defaultClient = { 
   id: null,
   name: null,
@@ -64,14 +64,23 @@ const initialDebt = {
 
 function App() {
 
+  /* Clients are the users from jsonplaceholder.typicode.com/users */
   const [clients, setClients] = useState([defaultClient]);
+  /* Debts are the results from localhost:3000/api/debts */
   const [debts, setDebts] = useState([initialDebt]);
+  /* SelectedClient is filled each time an item from Debtslist.jsx is cliked */
   const [selectedClient, setSelectedClient] = useState(initialDebt);
+  /* Same as the above state, but only the ID of the array. */
   const [selectedIdArray, setSelectedIdArray] = useState(null);
+  /* Makes all inputs to be enabled */
   const [editMode, setEditMode] = useState(true);
+  /* Check if header authentication is set */
   const [authorized, setAuthorized] = useState();
-  let history = useHistory();
 
+  let history = useHistory();
+  
+  /* Fetch Data */
+  // All Data requests are triggered only one time per HTTP request
   const getDebts = () => {
     axiosGet(API_RAILS).then(response => {
       if(response && response.status === 200) {
@@ -81,9 +90,10 @@ function App() {
       if(response && response.status === 401) {
         setAuthorized(false);
       }
-  });
+   });
   }
 
+  /* Users from Jsonplaceholder */
   const getClients = () => {
     axiosGet(API_JSON).then(res => {
       if(res && res.status === 200) {
@@ -93,6 +103,7 @@ function App() {
     });
   }
 
+  /* Component Did Mount */
   useEffect(
     () => {
       getClients();
@@ -100,6 +111,7 @@ function App() {
     },[]
   );
 
+  /* Client state watch */
   useEffect(()=> {
     if (selectedClient._id.$oid) {
       updateEditMode(false)
@@ -108,6 +120,7 @@ function App() {
     }
   },[selectedClient])
 
+  /* Functions directly related to the UseContext API */
   const updateSelectedClient = (client) => {
     setSelectedClient(client);
   }
@@ -140,8 +153,8 @@ function App() {
     setAuthorized(authorized);
   }
 
+  /* All Context Props and Functions */
   const value = {
-    id: 4,
     clients: clients,
     debts: debts,
     selectedClient: selectedClient,
@@ -157,7 +170,8 @@ function App() {
     updateEditDebts: updateEditDebts,
     initialDebt: initialDebt
   }
-  
+
+  /* The App understands the user wants to create a new record when none of the clients is selected */
   const handleClickNew = () => {
     updateSelectedClient(initialDebt);
     updateSelectedIdArray(null);
@@ -168,8 +182,7 @@ function App() {
       <div className="App">
         <Router history={history}>
           <Navbar />
-          <button onClick={handleClickNew} class="button button-new"></button>
-
+          <button onClick={handleClickNew} className="button button-new"></button>
           { authorized === false && ( <Redirect to='/login' />)}
               <Switch>
                 <Route exact path="/novo" component={RegistrationsNew} />

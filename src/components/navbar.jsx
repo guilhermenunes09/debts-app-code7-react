@@ -3,25 +3,24 @@ import { Link } from 'react-router-dom';
 
 function Navbar () {
     return(
-        <nav class="navbar navbar-dark bg-dark mb-4">
+        <nav className="navbar navbar-dark bg-dark mb-4">
             <Link className="navbar-brand" to='/'>Debts App</Link>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                <a class="nav-link" href="#">Início<span class="sr-only">(current)</span></a>
+            <div className="collapse navbar-collapse" id="navbarText">
+            <ul className="navbar-nav mr-auto">
+                <li className="nav-item active">
+                    <Link to="/" className="nav-link">Início<span className="sr-only">(current)</span></Link>
                 </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Registrar</a>
+                <li className="nav-item">
+                    <Link to="/novo" className="nav-link">Registrar</Link>
                 </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+                <li className="nav-item">
+                    <Link to="/login" className="nav-link">Login</Link>
                 </li>
             </ul>
-            <span class="navbar-text">
-                
+            <span className="navbar-text">
             </span>
             </div>
         </nav>

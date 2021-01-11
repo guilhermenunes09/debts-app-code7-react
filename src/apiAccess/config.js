@@ -1,3 +1,4 @@
+/* Add here all Environment Variables that you need */
 
 const HOST = process.env.REACT_APP_API_HOST
 

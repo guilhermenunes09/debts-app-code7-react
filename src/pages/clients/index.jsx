@@ -6,7 +6,7 @@ function ClientsIndex (props) {
   return (
     <div className="ClientsList">
         {props.clientsProp.map(function (item, i) {
-            return <ClientCard clientCard={item} />
+            return <ClientCard key={new Date().getTime() + i} clientCard={item} />
           })}
     </div>
   );
