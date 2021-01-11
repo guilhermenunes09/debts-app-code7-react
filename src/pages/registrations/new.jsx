@@ -37,29 +37,28 @@ function RegistrationsNew (props) {
     }
 
     return(
-        <div className="row justify-content-center">
+        <div className="row justify-content-center" style={{marginTop: 100}}>
             <div className="dbt-new border border-info p-4 m-2 col-sm-6 p-4">
                 <div className="bd-highlight">
                     <form className="text-left">
-                        <div className="form-group">
-                            <label className="pl-2" for="formGroupExampleInput">Nome</label>
-                            <input ref={inputName} type="text" className="form-control" id="formGroupExampleInput" placeholder="Ex: José Silva" />
-                        </div>
-                        <div className="form-group">
-                            <label className="pl-2" for="formGroupExampleInput">E-mail</label>
-                            <input ref={inputEmail} type="email" className="form-control" id="formGroupExampleInput" placeholder="nome@email.com" />
-                        </div>
-                        <div className="form-group">
-                            <label className="pl-2" for="formGroupExampleInput">Senha</label>
-                            <input ref={inputPassword} type="password" className="form-control" id="formGroupExampleInput" placeholder="Min. 6 Caracteres" />
-                        </div>
-                        <div className="form-group">
-                            <label className="pl-2" for="formGroupExampleInput">Confirmação de Senha</label>
-                            <input ref={inputPasswordConfirmation} type="password" className="form-control" id="formGroupExampleInput" placeholder="Repita a Senha" />
-                        </div>
+                        <h1>Cadastrar</h1>
+                        <form className="form-floating">
+                            <input ref={inputEmail} type="email" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="nome@email.com" />
+                            <label for="floatingInputInvalid">E-mail</label>
+                        </form>
+
+                        <form className="form-floating">
+                            <input ref={inputPassword} type="password" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="nome@email.com" />
+                            <label for="floatingInputInvalid">Senha</label>
+                        </form>
+
+                        <form className="form-floating">
+                            <input ref={inputPasswordConfirmation} type="password" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="nome@email.com" />
+                            <label for="floatingInputInvalid">Confirmação da Senha</label>
+                        </form>
                     </form>
                 </div>
-                <button onClick={() => handleClick ()} type="button" className="btn btn-outline-primary mr-2">Registrar</button><br />
+                <button onClick={() => handleClick ()} type="button" className="btn btn-outline-primary mr-2 m-2">Registrar</button><br />
                 <Link to='/login' >Logar</Link>
             </div>
         </div>

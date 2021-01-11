@@ -34,23 +34,24 @@ function SessionsNew (props) {
     }
 
     return(
-        <div className="row justify-content-center">
-            <div className="dbt-new border border-info p-4 m-2 col-sm-6 p-4">
+        <div className="row justify-content-center" style={{marginTop: 100}}>
+            <div className="dbt-new border border-info p-4 m-2 col-sm-6">
                 <div className="bd-highlight">
-
+                    <h1>Login</h1>
                     <form className="text-left">
-                        <div className="form-group">
-                            <label className="pl-2" for="formGroupExampleInput">E-mail</label>
-                            <input ref={inputLogin} type="email" className="form-control" id="formGroupExampleInput" placeholder="nome@email.com" />
-                        </div>
-                        <div className="form-group">
-                            <label className="pl-2" for="formGroupExampleInput">Senha</label>
-                            <input ref={inputPassword} type="password" className="form-control" id="formGroupExampleInput" placeholder="Min. 6 Caracteres" />
-                        </div>
+                        <form className="form-floating">
+                            <input ref={inputLogin} type="email" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="nome@email.com" />
+                            <label for="floatingInputInvalid">E-mail</label>
+                        </form>
+
+                        <form className="form-floating">
+                            <input ref={inputPassword} type="password" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="Min. 6 Caracteres" />
+                            <label for="floatingInputInvalid">Senha</label>
+                        </form>
                     </form>
             
                 </div>
-                <button onClick={() => handleClick ()} type="button" className="btn btn-outline-primary mr-2">Entrar</button><br/>
+                <button onClick={() => handleClick ()} type="button" className="btn btn-outline-primary m-2">Entrar</button><br/>
                 <Link to='/novo' >Registrar-se</Link>
             </div>
         </div>
