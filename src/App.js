@@ -122,6 +122,12 @@ function App() {
     setDebts(newDebts);
   }
 
+  const updateExcludeDebts = (selectedIdArray) => {
+    const newDebts = debts;
+    newDebts.splice(selectedIdArray, 1);
+    setDebts(newDebts);
+  }
+
   const updateSelectedIdArray = (idArray) => {
     setSelectedIdArray(idArray)
   }
@@ -146,8 +152,10 @@ function App() {
     updateSelectedIdArray: updateSelectedIdArray,
     updateSaveDebts: updateSaveDebts,
     updateEditMode: updateEditMode,
+    updateExcludeDebts: updateExcludeDebts,
     updateAuthorized: updateAuthorized,
-    updateEditDebts: updateEditDebts
+    updateEditDebts: updateEditDebts,
+    initialDebt: initialDebt
   }
   
   const handleClickNew = () => {

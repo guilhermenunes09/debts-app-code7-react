@@ -43,15 +43,28 @@ function NewForm () {
         });
     }
 
-    const handleClickExclude = () => {
-        axiosDelete(API_RAILS, 0).then(response => {
+    const confirmDelete = () => {
+        axiosDelete(API_RAILS, value.selectedClient._id.$oid).then(response => {
+            console.log("CHECK DELETE RESPONSE");
+            console.log(response);
             if(response.status == 200) {
-                console.log("Sucesso!");
-                console.log(response);
+                value.updateExcludeDebts(value.selectedIdArray);
+                value.updateSelectedClient(value.initialDebt);
+                
             } else {
                 console.log("Falhou!");
             }
         });
+    }
+
+    const handleClickExclude = () => {
+
+        if (window.confirm('Tem certeza que deseja deletar este registro?')) {
+            confirmDelete();
+        }
+
+        
+
     }
 
     const handleClickEdit = () => {
@@ -96,7 +109,7 @@ function NewForm () {
 
 
 
-                <button onClick={() => handleClickExclude ()} type="button" class="btn btn-outline-secondary mr-2">Excluir</button>
+                <button onClick={() => handleClickExclude ()} type="button" class="btn btn-outline-danger mr-2">Excluir</button>
                 <button onClick={() => handleClickEdit ()} type="button" class="btn btn-outline-secondary mr-2">Editar</button>
                 <button disabled={value.editMode ? false : true} onClick={() => handleClickSave ()} type="button" class="btn btn-outline-primary">Salvar</button>
             </form>

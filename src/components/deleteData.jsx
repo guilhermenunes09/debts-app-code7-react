@@ -6,9 +6,12 @@ export let axiosDelete = function(url, id=0) {
             if(id===0) {
                 id="";
             }
-            
+            const headers = {
+                'X-User-Token': localStorage.getItem('token'),
+                'X-User-Email': localStorage.getItem('email')
+            }
             // Make a request for a user with a given ID
-            Axios.delete(url + '/' + id)
+            Axios.delete(url + '/' + id, { headers: headers})
             .then(function (response) {
                 // handle success
                 const data = response.data;
