@@ -17,7 +17,7 @@ function NewForm () {
     const handleClickSave = () => {       
         const selected = inputClient.current.selectedIndex;
         const myClient = inputClient.current[selected].getAttribute("data-value");
-        const oid = value.selectedIdArray ? value.selectedClient._id.$oid : 0;
+        const oid = value.selectedClient._id.$oid ? value.selectedClient._id.$oid : 0;
         const dataPost = {
             debt: {
                 id: oid,
