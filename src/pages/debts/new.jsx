@@ -12,11 +12,11 @@ function DebtsNew () {
 
     const value = useContext(DebtsContext);
 
-    let title;
+    let title = "   ";
     if (value.editMode && value.selectedClient._id.$oid === null) {
         title = "Nova Dívida";
     } else {
-        title = value.selectedClient._id.$oid ? value.selectedClient.client.name : "";
+        title = value.selectedClient._id.$oid ? value.selectedClient.client.name : "   ";
     }
 
     return(
