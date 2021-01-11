@@ -16,16 +16,16 @@ function DebtsList () {
     }
     /* UI shows which item is selected on the list */
     let StyleClass = {
-        selected: "debt-item-selected p-2 m-2 bd-highlight",
-        notSelected: "debt-item border border-info p-2 m-2 bd-highlight",
+        selected: "client-item debt-item-selected m-2 bd-highlight",
+        notSelected: "client-item debt-item border border-info m-2 bd-highlight",
     }
 
     const oid = value.selectedClient ? value.selectedClient._id.$oid : 0;
 
     return(
-        <div className="d-flex flex-column bd-highlight mb-3 text-center">
+        <div className="client-item d-flex flex-column bd-highlight mb-3 text-center">
             {value.debts.map((item,i) => {
-                return <div key={new Date().getTime() + i } className={oid === item._id.$oid ? StyleClass.selected : StyleClass.notSelected} ref={debt} value={item} id={i}  onClick={() => handleClick(item, i)}><p>{ item.client.name }</p> <p>R${ item.amount }</p></div>                        
+                return <div key={new Date().getTime() + i } className={oid === item._id.$oid ? StyleClass.selected : StyleClass.notSelected} ref={debt} value={item} id={i}  onClick={() => handleClick(item, i)}><p className="d-none d-md-block">{ item.client.name }</p> <p className="d-none d-md-block">R${ item.amount }</p><p className="d-block d-sm-none pt-3">{item.client.name ? item.client.name.charAt(0) : ''}</p></div>                        
     
             })}
         </div>

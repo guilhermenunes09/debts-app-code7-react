@@ -19,6 +19,9 @@ import SessionsNew from './pages/sessions/new.jsx';
 import DebtsNew from './pages/debts/new';
 import RegistrationsNew from './pages/registrations/new.jsx';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
 
 
 /* Initial Data Structure */
@@ -182,7 +185,7 @@ function App() {
       <div className="App">
         <Router history={history}>
           <Navbar />
-          <button onClick={handleClickNew} className="button button-new"></button>
+          <button onClick={handleClickNew} className="button button-new"><FontAwesomeIcon icon={faPlus} /></button>
           { authorized === false && ( <Redirect to='/login' />)}
               <Switch>
                 <Route exact path="/novo" component={RegistrationsNew} />

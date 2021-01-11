@@ -8,9 +8,10 @@
 }
 
 input:disabled,
-select.form-control:disabled {
+select:disabled,
+textarea:disabled {
   background: transparent !important;
-  color: rgb(69, 93, 100);
+  color: black;
   border: none !important;
   -webkit-box-shadow: none;
   box-shadow: none;

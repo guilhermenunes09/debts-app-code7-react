@@ -22,11 +22,11 @@ function DebtsNew () {
     return(
         <div className="container text-left">
             <div className="row">
-                <div className="col-sm-3">
+                <div className="col-3">
                     <DebtsList />
                 </div>
-                <div className="col-sm-9">
-                    <div className="debt-new p-4 m-2 bd-highlight">
+                <div className="col-9">
+                    <div className="debt-new p-3 m-2 bd-highlight">
                         <h1>{ title } </h1>
                         <NewForm />
                     </div>

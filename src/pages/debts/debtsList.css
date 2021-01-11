@@ -26,6 +26,10 @@
     cursor: pointer;
     color: #000000;
     background-color: #fff;
-    border: 1px solid #000000;
+    border: 1px solid #dadada;
     border-left: 6px solid #7be88d !important;
+}
+
+.client-item {
+    min-height: 40px;
 }

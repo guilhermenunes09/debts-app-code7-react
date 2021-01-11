@@ -129,7 +129,7 @@ function NewForm () {
                         return <option key={new Date().getTime() + i} value={item.id} data-value={JSON.stringify(item)}>{item.name}</option>
                     })}
                 </select>
-                <label for="floatingSelect is-invalid">{ iClient ? 'Este campo é obrigatório': 'Selecione o Cliente'}</label>
+                <label for="floatingSelect is-invalid">{value.editMode ? 'Selecione o Cliente' : 'Cliente'}</label>
             </div>
 
             <div class="form-floating">
