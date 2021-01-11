@@ -78,7 +78,7 @@ function App() {
   /* Makes all inputs to be enabled */
   const [editMode, setEditMode] = useState(true);
   /* Check if header authentication is set */
-  const [authorized, setAuthorized] = useState();
+  const [authorized, setAuthorized] = useState(false);
 
   let history = useHistory();
   
@@ -109,9 +109,11 @@ function App() {
   /* Component Did Mount */
   useEffect(
     () => {
-      getClients();
-      getDebts();
-    },[]
+      if(authorized) {
+        getClients();
+        getDebts();
+      }
+    },[authorized]
   );
 
   /* Client state watch */
@@ -185,13 +187,12 @@ function App() {
       <div className="App">
         <Router history={history}>
           <Navbar />
-          <button onClick={handleClickNew} className="button button-new"><FontAwesomeIcon icon={faPlus} /></button>
-          { authorized === false && ( <Redirect to='/login' />)}
-              <Switch>
-                <Route exact path="/novo" component={RegistrationsNew} />
-                <Route exact path="/login" component={SessionsNew} />
-                <Route exact path="/" component={DebtsNew} />  
-              </Switch>
+            <Switch >
+              <Route exact path="/novo" component={RegistrationsNew} />
+              <Route exact path="/login" component={SessionsNew} />
+              <Route exact path="/" component={DebtsNew} />  
+            </Switch>
+            )}
         </Router>
       </div>
     </DebtsContext.Provider>

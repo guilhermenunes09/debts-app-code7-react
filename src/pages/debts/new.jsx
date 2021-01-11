@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { DebtsContext } from '../../contexts/currentClient.js';
 import DebtsList from './debtsList.jsx';
 import NewForm from './newForm.jsx';
@@ -8,9 +8,15 @@ import '../../components/styles/debtsNew.css';
 // This Component contains 2 other components
 // One is the list of Debts, the other is the form
 
-function DebtsNew () {
+function DebtsNew (props) {
 
     const value = useContext(DebtsContext);
+
+    useEffect(() => {
+        if(value.authorized === false) {
+            props.history.push('/login');
+        }
+    },[]);
 
     let title = "   ";
     if (value.editMode && value.selectedClient._id.$oid === null) {

@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import { DebtsContext } from '../../contexts/currentClient.js';
 import './debtsList.css';
 
