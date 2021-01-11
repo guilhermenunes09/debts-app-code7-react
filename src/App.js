@@ -26,13 +26,49 @@ import RegistrationsNew from './pages/registrations/new.jsx';
 
 
 
+const defaultClient = { 
+  id: null,
+  name: null,
+  username: null,
+  email: null,
+  address: {
+      street: null,
+      suite: null,
+      city: null,
+      zipcode: null,
+      geo: {
+          lat: null,
+          lng: null
+      }
+  },
+  phone: null,
+  website: null,
+  company: {
+      name: null,
+      catchPhrase: null,
+      bs: null
+  },
+}
+
+const initialDebt = {
+  _id: {
+      $oid: null
+  },
+  amount: null,
+  client: defaultClient,
+  reason: null,
+  when: null
+};
+
+
+
 function App() {
 
-  const [clients, setClients] = useState(null);
-  const [debts, setDebts] = useState();
-  const [selectedClient, setSelectedClient] = useState();
+  const [clients, setClients] = useState([defaultClient]);
+  const [debts, setDebts] = useState([initialDebt]);
+  const [selectedClient, setSelectedClient] = useState(initialDebt);
   const [selectedIdArray, setSelectedIdArray] = useState(null);
-  const [editMode, setEditMode] = useState();
+  const [editMode, setEditMode] = useState(true);
   const [authorized, setAuthorized] = useState();
   let history = useHistory();
 
@@ -65,7 +101,7 @@ function App() {
   );
 
   useEffect(()=> {
-    if (selectedClient) {
+    if (selectedClient._id.$oid) {
       updateEditMode(false)
     } else {
       updateEditMode(true)
@@ -115,7 +151,7 @@ function App() {
   }
   
   const handleClickNew = () => {
-    updateSelectedClient(null);
+    updateSelectedClient(initialDebt);
     updateSelectedIdArray(null);
   }
 

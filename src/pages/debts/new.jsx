@@ -19,12 +19,13 @@ function DebtsNew (props) {
 
     let title = "";
     if (value.editMode) {
-        title = "Editando ".concat(value.selectedClient && value.selectedClient.client.name);
-        if(value.selectedIdArray === null) {
+        if(value.selectedClient._id.$oid === null) {
             title = "Nova Dívida";
+        } else {
+            title = "Editando ".concat(value.selectedClient.client.name);
         }
     } else {
-        title = value.selectedClient && value.selectedClient.client.name;
+        title = value.selectedClient._id.$oid ? value.selectedClient.client.name : "";
     }
 
     return(

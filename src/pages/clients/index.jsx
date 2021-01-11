@@ -5,7 +5,7 @@ function ClientsIndex (props) {
 
   return (
     <div className="ClientsList">
-        {props.clientsProp && props.clientsProp.map(function (item, i) {
+        {props.clientsProp.map(function (item, i) {
             return <ClientCard clientCard={item} />
           })}
     </div>
