@@ -40,12 +40,12 @@ function SessionsNew (props) {
                     <h1>Login</h1>
                     <form className="text-left">
                         <form className="form-floating">
-                            <input ref={inputLogin} type="email" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="nome@email.com" />
+                            <input ref={inputLogin} type="email" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="nome@email.com" defaultValue="exemplo@email.com" />
                             <label for="floatingInputInvalid">E-mail</label>
                         </form>
 
                         <form className="form-floating">
-                            <input ref={inputPassword} type="password" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="Min. 6 Caracteres" />
+                            <input ref={inputPassword} type="password" className={`form-control mb-3`} id="formGroupExampleInput" placeholder="Min. 6 Caracteres" defaultValue="123456" />
                             <label for="floatingInputInvalid">Senha</label>
                         </form>
                     </form>
