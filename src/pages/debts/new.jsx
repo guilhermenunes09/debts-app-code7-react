@@ -26,11 +26,9 @@ function DebtsNew () {
                     <DebtsList />
                 </div>
                 <div className="col-sm-9">
-                    <div className="debt-new d-flex p-4 m-2 bd-highlight">
-                        <div>
-                            <h1>{ title } </h1>
-                            <NewForm />
-                        </div>
+                    <div className="debt-new p-4 m-2 bd-highlight">
+                        <h1>{ title } </h1>
+                        <NewForm />
                     </div>
                 </div>    
             </div>

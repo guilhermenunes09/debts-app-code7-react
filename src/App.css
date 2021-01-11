@@ -58,3 +58,8 @@ h1 {
   padding-bottom: 30px;
   text-align: center;
 }
+
+form {
+  max-width: 600px;
+  margin: auto;
+}
