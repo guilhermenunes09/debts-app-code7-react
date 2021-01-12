@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { DebtsContext } from '../../contexts/currentClient.js';
 import DebtsList from './debtsList.jsx';
 import NewForm from './newForm.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import '../../components/styles/debtsNew.css';
 
 
@@ -25,8 +27,15 @@ function DebtsNew (props) {
         title = value.selectedClient._id.$oid ? value.selectedClient.client.name : "   ";
     }
 
+    /* The App understands the user wants to create a new record when none of the clients is selected */
+    const handleClickNew = () => {
+        value.updateSelectedClient(value.initialDebt);
+        value.updateSelectedIdArray(null);
+    }
+
     return(
         <div className="container text-left">
+        <button className="button-new" onClick={() => handleClickNew()}><FontAwesomeIcon icon={faPlus} /></button>
             <div className="row">
                 <div className="col-3">
                     <DebtsList />

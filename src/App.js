@@ -19,8 +19,6 @@ import SessionsNew from './pages/sessions/new.jsx';
 import DebtsNew from './pages/debts/new';
 import RegistrationsNew from './pages/registrations/new.jsx';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -176,12 +174,6 @@ function App() {
     initialDebt: initialDebt
   }
 
-  /* The App understands the user wants to create a new record when none of the clients is selected */
-  const handleClickNew = () => {
-    updateSelectedClient(initialDebt);
-    updateSelectedIdArray(null);
-  }
-
   return (
     <DebtsContext.Provider value={value}>
       <div className="App">
@@ -192,7 +184,6 @@ function App() {
               <Route exact path="/login" component={SessionsNew} />
               <Route exact path="/" component={DebtsNew} />  
             </Switch>
-            )}
         </Router>
       </div>
     </DebtsContext.Provider>
